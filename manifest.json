@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Speed Control",
-  "description": "This extension allows the user to control the speed of html5 videos",
+  "description": "This extension allows the user to control the speed of HTML5 videos",
   "version": "1.0",
 
   "browser_action": {
