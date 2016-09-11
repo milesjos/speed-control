@@ -32,7 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
       selectedSpeed.value = result.speed;
       speedIndicator.innerHTML = result.speed;
       chrome.tabs.executeScript({
-        code: "document.getElementsByTagName('VIDEO')[0].playbackRate = "+result.speed
+        code: "var videos = document.getElementsByTagName('VIDEO');"+
+          "for (var video of videos) {"+
+            "video.playbackRate = "+selectedSpeed+
+          "}"
       });
     }
   });
