@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
       chrome.tabs.executeScript({
         code: "var videos = document.getElementsByTagName('VIDEO');"+
           "for (var video of videos) {"+
-            "video.playbackRate = "+selectedSpeed+
+            "video.playbackRate = "+selectedSpeed.value+
           "}"
       });
     }
