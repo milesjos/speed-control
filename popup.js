@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var speedIndicator = document.getElementById("currentSpeed");
 
   // Add listener on change of slider
-  selectedSpeed.addEventListener("change", function(event) {
+  selectedSpeed.addEventListener("input", function(event) {
     // Get selected speed
     var selectedSpeed = this.value;
 
