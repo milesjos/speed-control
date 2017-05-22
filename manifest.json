@@ -17,5 +17,9 @@
   "permissions": [
     "activeTab",
     "storage"
-  ]
+  ],
+
+  "icons": {
+    "128": "icon.png"
+  }
 }
