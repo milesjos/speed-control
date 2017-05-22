@@ -25,10 +25,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if (result.speed !== selectedSpeed) {
         chrome.storage.local.set({'speed': selectedSpeed});
         chrome.tabs.executeScript({
-          code: "var videos = document.getElementsByTagName('VIDEO');"+
-            "for (var video of videos) {"+
-              "video.playbackRate = "+selectedSpeed+
-            "}"
+          code: "var selectedSpeed = " + selectedSpeed
+        }, function() {
+          chrome.tabs.executeScript({
+            file: 'change-speed.js'
+          });
         });
       }
     });
@@ -43,10 +44,11 @@ document.addEventListener('DOMContentLoaded', function() {
       selectedSpeed.value = result.speed;
       speedIndicator.innerHTML = result.speed;
       chrome.tabs.executeScript({
-        code: "var videos = document.getElementsByTagName('VIDEO');"+
-          "for (var video of videos) {"+
-            "video.playbackRate = "+selectedSpeed.value+
-          "}"
+        code: "var selectedSpeed = " + selectedSpeed.value
+      }, function() {
+        chrome.tabs.executeScript({
+          file: 'change-speed.js'
+        });
       });
     }
   });
