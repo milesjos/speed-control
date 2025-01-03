@@ -1,0 +1,16 @@
+:root {
+  --background: #2C302E;
+  --text: white;
+  --accent: #537A5A;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--background);
+    color: var(--text)
+  }
+}
+
+input[type='range'] {
+  accent-color: var(--accent);
+}

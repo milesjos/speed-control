@@ -1,4 +1,14 @@
+const getActiveTab = async () => {
+  let queryOptions = { active: true, lastFocusedWindow: true };
+  // `tab` will either be a `tabs.Tab` instance or `undefined`.
+  let [tab] = await chrome.tabs.query(queryOptions);
+  return tab;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+
+  // Set access level
+  chrome.storage.session.setAccessLevel({ accessLevel: 'TRUSTED_AND_UNTRUSTED_CONTEXTS' });
 
   // Get selected speed element
   var selectedSpeed = document.getElementById("selectedSpeed");
@@ -21,15 +31,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var selectedSpeed = this.value;
 
     // Save speed if different
-    chrome.storage.local.get(["speed"], function(result) {
+    chrome.storage.local.get(["speed"], async (result) => {
       if (result.speed !== selectedSpeed) {
         chrome.storage.local.set({'speed': selectedSpeed});
-        chrome.tabs.executeScript({
-          code: "var selectedSpeed = " + selectedSpeed
-        }, function() {
-          chrome.tabs.executeScript({
-            file: 'change-speed.js'
-          });
+        const tab = await getActiveTab();
+        chrome.scripting.executeScript({
+          target: {tabId: tab.id},
+          files: ['change-speed.js']
         });
       }
     });
@@ -39,18 +47,15 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Set value to stored value
-  chrome.storage.local.get(["speed"], function(result) {
+  chrome.storage.local.get(["speed"], async (result) => {
     if (result.speed !== undefined) {
       selectedSpeed.value = result.speed;
       speedIndicator.innerHTML = result.speed;
-      chrome.tabs.executeScript({
-        code: "var selectedSpeed = " + selectedSpeed.value
-      }, function() {
-        chrome.tabs.executeScript({
-          file: 'change-speed.js'
-        });
+      const tab = await getActiveTab();
+      chrome.scripting.executeScript({
+        target: {tabId: tab.id},
+        files: ['change-speed.js']
       });
     }
   });
-
 });

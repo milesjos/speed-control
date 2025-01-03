@@ -14,8 +14,13 @@ function findVideos(doc, videos) {
   }
 }
 
-var videos = [];
-findVideos(document, videos);
-for (var video of videos) {
-  video.playbackRate = selectedSpeed;
-}
+chrome.storage.local.get(["speed"], async (result) => {
+  if (result.speed) {
+    var videos = [];
+    findVideos(document, videos);
+    for (var video of videos) {
+      video.playbackRate = result.speed;
+    }
+  }
+});
+
